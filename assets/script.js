@@ -1,49 +1,75 @@
-var timer = $('#timer');
+var timer = $('.timer');
 var score
-var questions = $('.questions');
-var answers = $('#answers');
+var questionEl = $('.question');
+var answerEl = $('.answers');
 var options = [$("<button>"), $("<button>"), $("<button>"), $("<button>")];
+var card = $('.card-body');
+var shuffledQuestions, currentQuestionIndex
 
 
-
-var startButton = $('#start-btn');
+var startButton = $('.start-btn');
 $(startButton).on('click', startQuestion);
 
 // answer key format (quiz.method)
-var quiz = {
+// var quiz = {
 
 // when start button is clicked
-startQuestion () {
-    // start the clock, and hide all elements in instr card
-    // pull the questions in and make display
+function startQuestion () {
+    // hide all elements in instr card
+    $(card).addClass('hide');
+    // start the clock
+    // pull the questions in and make display (might be easier to make sample question hidden on html)
+    $(questionEl).removeClass('hide');
+    // shuffle questions
+    shuffledQuestions = questions.sort(()=> Math.random() - .5);
+    currentQuestionIndex = 0;
+    setNextQuestion()
     // start populating board (questions and answers)
-    // append to card-boy div
-    setNextQuestion(questions);
-},
+    // append to card-body div
+};
+
+function setNextQuestion() {
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+};
+
+function showQuestion(question) {
+    $(questionEl).text(question.question);
+    question.options.forEach(options => {
+        var button = document.createElement('button')
+        button.innerText = options.text
+        button.classList.add('btn')
+    if (options.answer) {
+        button.dataset.answer = options.answer
+    }
+    button.addEventListener('click', checkAnswer)
+    answerEl.appendChild(button);
+    })
+
+};
 
 // check whether option clicked is correct and if there is time left go to next question else end quiz
-checkAnswer () {
+function checkAnswer () {
     // create right/wrong indicaton (apply css here)
     // pull from questions array and match answer
     // check if text content matches answer content else false
-    // if false and all answers finished call gameOver function
+    // if false and all answers finished call endQuiz function
     // if option is false subtract 10 seconds from time
-},
+};
 
-endQuiz () {
+function endQuiz () {
     // setting the title to "All done!"
     // time on the clock and make equal to score (final score)
-},
+};
 
-logScore () {
+function logScore () {
     // new element perhaps for text box
     // clear screen and add in all elements for high score
     // link to 'View Highscores' on click
     // log answers to storage
-},
+};
 
 // object array for questions, multiple choice options, and corresponding answers
-questions: [
+var questions = [
     
     {question: "Commonly used data types DO NOT include:", 
     options: ["strings", "booleans", "alerts", "numbers"], 
@@ -65,4 +91,4 @@ questions: [
     options: ["Javascript", "terminal/bash", "for loops", "console.log"], 
     answer: "console.log"}
 ]
-};
+// };
