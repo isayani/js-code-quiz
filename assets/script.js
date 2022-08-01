@@ -1,10 +1,12 @@
-var timer = $('.timer');
+var timer = document.querySelector('.timer');
 var score
-var questionEl = $('#question');
-var parentQuestionEl = $('.question');
-var answerEl = $('.answers');
-var options = [$("<button>"), $("<button>"), $("<button>"), $("<button>")];
-var card = $('.card-body');
+var questionEl = document.querySelector('#question');
+var parentQuestionEl = document.querySelector('.question');
+var answerEl = document.querySelector('.answers');
+var linebreak = document.createElement('br');
+var btn = document.createElement("button");
+var options = [btn, btn, btn, btn];
+var card = document.querySelector('.card-body');
 var shuffledQuestions, currentQuestionIndex
 // object array for questions, multiple choice options, and corresponding answers
 var questions = [
@@ -31,8 +33,8 @@ var questions = [
 ]
 
 
-var startButton = $('.start-btn');
-$(startButton).on('click', startQuestion);
+var startButton = document.querySelector('.start-btn');
+startButton.addEventListener('click', startQuestion);
 
 // answer key format (quiz.method)
 // var quiz = {
@@ -40,10 +42,10 @@ $(startButton).on('click', startQuestion);
 // when start button is clicked
 function startQuestion () {
     // hide all elements in instr card
-    $(card).addClass('hide');
+    card.classList.add('hide');
     // start the clock
     // pull the questions in and make display (might be easier to make sample question hidden on html)
-    $(parentQuestionEl).removeClass('hide');
+    parentQuestionEl.classList.remove('hide');
     // shuffle questions
     shuffledQuestions = questions.sort(()=> Math.random() - .5);
     currentQuestionIndex = 0;
@@ -57,25 +59,19 @@ function setNextQuestion() {
 };
 
 function showQuestion(question) {
-    $(questionEl).text(question.question);
-    answerEl.empty();
+    questionEl.innerText = question.question;
     question.options.forEach(options => {
-        var button = $('<button>') 
-        button.text(options)
-        console.log(options)
-        button.addClass('btn')
-    // if (options.answer) {
-    //     button.dataset.answer = options.answer
-    // }
-    // button.on('click', checkAnswer)
-    answerEl.append(button, '<br/>');
-    })
-    $('.btn').on('click', checkAnswer);
+        var button = document.createElement("button");
+        button.innerText = options;
+        button.classList.add('btn');
+        button.addEventListener('click', checkAnswer);
+        answerEl.appendChild(button);
+    });
 };
 
 // check whether option clicked is correct and if there is time left go to next question else end quiz
 function checkAnswer () {
-    var textBtn = $(this).text();
+    var textBtn = this.innerText;
 
     if (textBtn === shuffledQuestions[currentQuestionIndex].answer) {
         alert('correct')
@@ -84,7 +80,6 @@ function checkAnswer () {
     };
     currentQuestionIndex++
     setNextQuestion();
-    // if alert($(this).text()) === questions. 
     // create right/wrong indicaton (apply css here)
     // pull from questions array and match answer
     // check if text content matches answer content else false
@@ -93,6 +88,7 @@ function checkAnswer () {
 };
 
 function endQuiz () {
+    questionEl.innerText = 'All done!';
     // setting the title to "All done!"
     // time on the clock and make equal to score (final score)
 };
