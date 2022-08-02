@@ -16,14 +16,14 @@
         <nav class="navbar bg-light">
             <div class="container-fluid">
             <a class="highscore navbar-brand" href="#">View Highscores</a>
-            <span class="timer navbar-brand mb-0 h1 fw-normal">Time:</span>
+            <span class="timer navbar-brand mb-0 h1 fw-normal">Time: <span id='timerCountdown'></span></span>
 
             </div>
         </nav>
 
         <main class="vh-100">
             <div class="h-75 w-50 container d-flex align-items-center">
-                <div class="card text-center">
+                <div class="w-100 card text-center">
                     <div class="card-body">
                         <h5 class="questions card-title fs-1">JS Coding Quiz</h5>
                         <p class="card-text">You have 75 seconds to answer as series of questions about JavaScript. Once you hit start, the timer in the top will begin to count down. You will be told whether your answers are correct as the questions are answered. For every wrong answer, you lose 10 seconds. Your score will be displayed at the end, feel free to save to the leaderboard. <br> Good luck! </p>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="question card-body hide">
                         <h5 id="question"class="card-title fs-1">Question</h5>
-                        <p class="answers card-text"></p>
+                        <p class="answers card-text"></p> 
                         <!-- <p class="answers card-text">Answer 2 </p>
                         <p class="answers card-text">Answer 3 </p>
                         <p class="answers card-text">Answer 4 </p> -->

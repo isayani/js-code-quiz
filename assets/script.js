@@ -1,13 +1,14 @@
 var timer = document.querySelector('.timer');
-var score
+var countdown = document.querySelector('#timerCountdown');
+var time = 75;
 var questionEl = document.querySelector('#question');
 var parentQuestionEl = document.querySelector('.question');
 var answerEl = document.querySelector('.answers');
-var linebreak = document.createElement('br');
 var btn = document.createElement("button");
 var options = [btn, btn, btn, btn];
 var card = document.querySelector('.card-body');
 var shuffledQuestions, currentQuestionIndex
+
 // object array for questions, multiple choice options, and corresponding answers
 var questions = [
     
@@ -32,33 +33,47 @@ var questions = [
     answer: "console.log"}
 ]
 
-
+// event listener on click startButton
 var startButton = document.querySelector('.start-btn');
 startButton.addEventListener('click', startQuestion);
 
-// answer key format (quiz.method)
-// var quiz = {
 
 // when start button is clicked
 function startQuestion () {
     // hide all elements in instr card
     card.classList.add('hide');
     // start the clock
+    var countdownInt = setInterval(function(){
+        if (time === 0) {
+            clearInterval(countdownInt);
+            endQuiz();
+        } else if ((questions.length-1) === currentQuestionIndex) {
+            clearInterval(countdownInt);
+            endQuiz();
+        }
+        else {
+            countdown.textContent = time;
+            time--;
+        }
+    }, 1000)  
     // pull the questions in and make display (might be easier to make sample question hidden on html)
     parentQuestionEl.classList.remove('hide');
     // shuffle questions
     shuffledQuestions = questions.sort(()=> Math.random() - .5);
     currentQuestionIndex = 0;
     setNextQuestion()
-    // start populating board (questions and answers)
-    // append to card-body div
 };
 
 function setNextQuestion() {
-    showQuestion(shuffledQuestions[currentQuestionIndex]);
+    if((questions.length-1) === currentQuestionIndex) {
+        endQuiz();
+    } else {
+        showQuestion(shuffledQuestions[currentQuestionIndex]);
+    }
 };
 
 function showQuestion(question) {
+    answerEl.innerHTML = '';
     questionEl.innerText = question.question;
     question.options.forEach(options => {
         var button = document.createElement("button");
@@ -66,17 +81,21 @@ function showQuestion(question) {
         button.classList.add('btn');
         button.addEventListener('click', checkAnswer);
         answerEl.appendChild(button);
+        answerEl.appendChild(document.createElement('br'));
+        
     });
 };
 
 // check whether option clicked is correct and if there is time left go to next question else end quiz
 function checkAnswer () {
-    var textBtn = this.innerText;
+    console.log('test');
 
+    var textBtn = this.innerText;
     if (textBtn === shuffledQuestions[currentQuestionIndex].answer) {
         alert('correct')
     } else {
         alert('incorrect')
+        time -= 10;
     };
     currentQuestionIndex++
     setNextQuestion();
@@ -88,6 +107,7 @@ function checkAnswer () {
 };
 
 function endQuiz () {
+    answerEl.innerHTML = '';
     questionEl.innerText = 'All done!';
     // setting the title to "All done!"
     // time on the clock and make equal to score (final score)
@@ -99,6 +119,3 @@ function logScore () {
     // link to 'View Highscores' on click
     // log answers to storage
 };
-
-
-// };
