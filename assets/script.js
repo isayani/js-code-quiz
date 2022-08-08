@@ -88,17 +88,17 @@ function showQuestion(question) {
 
 // check whether option clicked is correct and if there is time left go to next question else end quiz
 function checkAnswer () {
-    console.log('test');
+    console.log(this);
 
     var textBtn = this.innerText;
     if (textBtn === shuffledQuestions[currentQuestionIndex].answer) {
-        alert('correct')
+        this.style = 'background-color: green; color: white';
     } else {
-        alert('incorrect')
+        this.style = 'background-color: red; color: white';
         time -= 10;
     };
     currentQuestionIndex++
-    setNextQuestion();
+    setTimeout(setNextQuestion, 500);
     // create right/wrong indicaton (apply css here)
     // pull from questions array and match answer
     // check if text content matches answer content else false
@@ -109,6 +109,8 @@ function checkAnswer () {
 function endQuiz () {
     answerEl.innerHTML = '';
     questionEl.innerText = 'All done!';
+
+    // time is high score, initials text box - put all into array in local storage
     // setting the title to "All done!"
     // time on the clock and make equal to score (final score)
 };
