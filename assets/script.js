@@ -88,7 +88,7 @@ function showQuestion(question) {
 
 // check whether option clicked is correct and if there is time left go to next question else end quiz
 function checkAnswer () {
-    
+
     var textBtn = this.innerText;
     if (textBtn === shuffledQuestions[currentQuestionIndex].answer) {
         this.style = 'background-color: green; color: white';
@@ -114,21 +114,28 @@ function endQuiz () {
     // Create label before initials
     var formLabel = document.createElement("label");
     answerEl.appendChild(document.createElement('br'));
-    formLabel.innerText = "Enter intials in XXX form:";
+    formLabel.innerText = "Enter initials in XXX form:";
     
     // Create a form dynamically
     var form = document.createElement("form");
     
-     // Create an input element for initials
+     // Create an input element and submit button for initials
      var initials = document.createElement("input");
-     
-     initials.setAttribute("type", "text");
+     var submit = document.createElement("button");
+
      initials.setAttribute("placeholder", "FUN");
+     submit.innerText = 'SAVE';
 
      form.appendChild(initials);
+     form.appendChild(submit);
+
      answerEl.appendChild(formLabel);
      answerEl.appendChild(form);
      
+
+     if (initials.length > 3) {
+        alert("Initials must be 3 letters!");
+    };
     // time is high score, initials text box - put all into array in local storage
     // setting the title to "All done!"
     // time on the clock and make equal to score (final score)
